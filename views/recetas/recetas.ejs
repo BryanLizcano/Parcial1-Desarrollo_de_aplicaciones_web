@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Receta del Examen - <%= nombre %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('../partials/header', { nombre: nombre }) %>
+
+    <main>
+        <section class="listado">
+            <% if (receta) { %>
+                <article class="tarjeta-auto" style="padding: 20px; max-width: 600px; margin: 20px auto;">
+                    <header>
+                        <h2 style="color: #2c3e50; text-align: center;"><%= receta.nombre %></h2>
+                    </header>
+                    
+                    <div style="display: flex; justify-content: space-between; font-style: italic; margin-bottom: 15px;">
+                        <span><strong>Cocina:</strong> <%= receta.tipoCocina %></span>
+                        <span><strong>Tiempo:</strong> <%= receta.tiempoPreparacion %></span>
+                    </div>
+                    
+                    <hr style="margin: 10px 0;">
+                    
+                    <section>
+                        <h3>Ingredientes:</h3>
+                        <ul>
+                            <% receta.ingredientes.forEach(function(ingrediente) { %>
+                                <li>
+                                    <strong><%= ingrediente.nombre %>:</strong> 
+                                    <%= ingrediente.cantidad %> <%= ingrediente.unidad %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </section>
+                    
+                    <hr style="margin: 10px 0;">
+
+                    <section>
+                        <h3>Origen:</h3>
+                        <p>
+                            <%= receta.origen.region %>, <%= receta.origen.pais %>
+                        </p>
+                    </section>
+                </article>
+            <% } else { %>
+                <p style="text-align: center;">No se encontró la receta en la base de datos.</p>
+            <% } %>
+        </section>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
+

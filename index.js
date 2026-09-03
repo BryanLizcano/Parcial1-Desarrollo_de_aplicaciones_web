@@ -2,8 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 
-const autosRoutes = require('./routes/autos');
-const charlasRoutes = require('./routes/charlas');
+const recetasRoutes = require('./routes/recetas');
 
 const connectMongo = require('./config/mongo');
 
@@ -22,11 +21,8 @@ app.get('/', (req, res) => {
     res.render('home', { nombre: 'Bryan Lizcano' });
 });
 
-// Rutas postgres
-app.use('/autos', autosRoutes);
-
-// Rutas mongo
-app.use('/charlas', charlasRoutes);
+// Ruta recetas
+app.use('/recetas', recetasRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
