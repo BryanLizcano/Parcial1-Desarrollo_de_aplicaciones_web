@@ -30,6 +30,13 @@
                 <p class="estado disponible">Disponible</p>
             <% } %>
 
+            <div style="margin: 20px 0; display: flex; gap: 10px;">
+                <a href="/autos/editar/<%= auto.id %>" style="padding: 10px 15px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 5px;">Editar</a>
+                <form action="/autos/eliminar/<%= auto.id %>" method="POST" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este auto?');">
+                    <button type="submit" style="padding: 10px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                </form>
+            </div>
+
             <a href="/autos">Volver al catálogo</a>
         </article>
     </main>

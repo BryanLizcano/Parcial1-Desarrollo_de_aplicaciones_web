@@ -10,6 +10,9 @@
 
     <main>
         <h2 style="text-align: center; margin-top: 20px;">Charlas MongoDB Atlas</h2>
+        <div style="margin: 1rem 0; text-align: center;">
+            <a href="/charlas/crear" style="display: inline-block; padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Crear Nueva Charla</a>
+        </div>
         <section class="listado">
             <% if (charlas && charlas.length > 0) { %>
                 <% charlas.forEach(function(charla) { %>
@@ -19,6 +22,12 @@
                         <p style="font-style: italic;"><%= charla.descripcion %></p>
                         <hr style="margin: 10px 0;">
                         <p><strong>Expositor:</strong> <%= charla.expositor.nombre %> (<%= charla.expositor.especialidad %>)</p>
+                        <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+                            <a href="/charlas/editar/<%= charla._id %>" style="padding: 8px 12px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 4px; font-size: 0.9em;">Editar</a>
+                            <form action="/charlas/eliminar/<%= charla._id %>" method="POST" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar esta charla?');">
+                                <button type="submit" style="padding: 8px 12px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Eliminar</button>
+                            </form>
+                        </div>
                     </article>
                 <% }); %>
             <% } else { %>

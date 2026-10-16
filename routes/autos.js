@@ -81,5 +81,88 @@ router.get('/auto/:id', async (req, res) => {
         res.status(500).send('Error en el servidor');
     }
 });
+// Crear auto - Formulario
+router.get('/crear', async (req, res) => {
+    try {
+        const categoriasRes = await pool.query('SELECT * FROM categorias ORDER BY nombre ASC');
+        const proveedoresRes = await pool.query('SELECT * FROM proveedores ORDER BY nombre ASC');
+        res.render('autos/crear', {
+            nombre: 'Bryan Lizcano',
+            categorias: categoriasRes.rows,
+            proveedores: proveedoresRes.rows
+        });
+    } catch (error) {
+        console.error('Error al cargar formulario de crear:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+});
+
+// Crear auto - Procesar POST
+router.post('/crear', async (req, res) => {
+    try {
+        const { marca, modelo, existencias, categoria_id, proveedor_id } = req.body;
+        await pool.query(
+            'INSERT INTO autos (marca, modelo, existencias, categoria_id, proveedor_id) VALUES ($1, $2, $3, $4, $5)',
+            [marca, modelo, existencias, categoria_id, proveedor_id]
+        );
+        res.redirect('/autos');
+    } catch (error) {
+        console.error('Error al crear auto:', error);
+        res.status(500).send('Error al crear el auto');
+    }
+});
+
+// Editar auto - Formulario
+router.get('/editar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const autoRes = await pool.query('SELECT * FROM autos WHERE id = $1', [id]);
+        
+        if (autoRes.rows.length === 0) {
+            return res.status(404).send('Auto no encontrado');
+        }
+
+        const categoriasRes = await pool.query('SELECT * FROM categorias ORDER BY nombre ASC');
+        const proveedoresRes = await pool.query('SELECT * FROM proveedores ORDER BY nombre ASC');
+        
+        res.render('autos/editar', {
+            nombre: 'Bryan Lizcano',
+            auto: autoRes.rows[0],
+            categorias: categoriasRes.rows,
+            proveedores: proveedoresRes.rows
+        });
+    } catch (error) {
+        console.error('Error al cargar formulario de editar:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+});
+
+// Editar auto - Procesar POST
+router.post('/editar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { marca, modelo, existencias, categoria_id, proveedor_id } = req.body;
+        await pool.query(
+            'UPDATE autos SET marca = $1, modelo = $2, existencias = $3, categoria_id = $4, proveedor_id = $5 WHERE id = $6',
+            [marca, modelo, existencias, categoria_id, proveedor_id, id]
+        );
+        res.redirect(`/autos/auto/${id}`);
+    } catch (error) {
+        console.error('Error al actualizar auto:', error);
+        res.status(500).send('Error al actualizar el auto');
+    }
+});
+
+// Eliminar auto
+router.post('/eliminar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM autos WHERE id = $1', [id]);
+        res.redirect('/autos');
+    } catch (error) {
+        console.error('Error al eliminar auto:', error);
+        res.status(500).send('Error al eliminar el auto');
+    }
+});
 
 module.exports = router;
