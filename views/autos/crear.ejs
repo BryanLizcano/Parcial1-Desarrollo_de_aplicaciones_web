@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nuevo Auto - <%= nombre %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main>
+        <article class="detalle-auto">
+            <h2>Crear Nuevo Auto</h2>
+            <form action="/autos/crear" method="POST" class="formulario">
+                <div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca" required>
+                </div>
+                <div>
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" name="modelo" required>
+                </div>
+                <div>
+                    <label for="existencias">Existencias:</label>
+                    <input type="number" id="existencias" name="existencias" min="0" required>
+                </div>
+                <div>
+                    <label for="categoria_id">Categoría:</label>
+                    <select id="categoria_id" name="categoria_id" required>
+                        <% categorias.forEach(function(cat) { %>
+                            <option value="<%= cat.id %>"><%= cat.nombre %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div>
+                    <label for="proveedor_id">Proveedor:</label>
+                    <select id="proveedor_id" name="proveedor_id" required>
+                        <% proveedores.forEach(function(prov) { %>
+                            <option value="<%= prov.id %>"><%= prov.nombre %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Guardar Auto</button>
+            </form>
+            <br>
+            <a href="/autos">Cancelar y volver</a>
+        </article>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
+

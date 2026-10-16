@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nueva Charla - <%= nombre %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main>
+        <article class="detalle-auto">
+            <h2>Crear Nueva Charla</h2>
+            <form action="/charlas/crear" method="POST" class="formulario">
+                <div>
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" required style="width: 100%; height: 100px; padding: 0.5rem;"></textarea>
+                </div>
+                <div>
+                    <label for="fecha">Fecha:</label>
+                    <input type="text" id="fecha" name="fecha" placeholder="Ej: 15 de Octubre, 2026" required>
+                </div>
+                <div>
+                    <label for="hora">Hora:</label>
+                    <input type="text" id="hora" name="hora" placeholder="Ej: 10:00 AM" required>
+                </div>
+                <h3 style="margin-top: 15px;">Datos del Expositor</h3>
+                <div>
+                    <label for="expositor_nombre">Nombre del Expositor:</label>
+                    <input type="text" id="expositor_nombre" name="expositor_nombre" required>
+                </div>
+                <div>
+                    <label for="expositor_especialidad">Especialidad:</label>
+                    <input type="text" id="expositor_especialidad" name="expositor_especialidad" required>
+                </div>
+                <div>
+                    <label for="expositor_correo">Correo:</label>
+                    <input type="email" id="expositor_correo" name="expositor_correo" required>
+                </div>
+                <button type="submit" class="btn">Guardar Charla</button>
+            </form>
+            <br>
+            <a href="/charlas">Cancelar y volver</a>
+        </article>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
+

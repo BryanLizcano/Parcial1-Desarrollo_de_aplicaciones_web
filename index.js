@@ -25,4 +25,26 @@ app.get('/', (req, res) => {
 app.use('/recetas', recetasRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+const server = app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+
+// Escuchar comandos desde la consola
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.on('line', (input) => {
+    const cmd = input.trim().toLowerCase();
+    if (cmd === 'stop' || cmd === 'exit') {
+        console.log('Deteniendo el servidor...');
+        server.close(() => {
+            process.exit(0);
+        });
+    } else if (cmd === 'reload') {
+        console.log('ℹ️ Para recargar la aplicación limpiamente en Node.js, es recomendable usar nodemon.');
+        console.log('Si inicias tu app con "npx nodemon index.js", puedes escribir "rs" y presionar Enter para recargar.');
+    } else if (cmd !== '') {
+        console.log(`Comando no reconocido: "${cmd}". Comandos disponibles: stop, exit, reload`);
+    }
+});

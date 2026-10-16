@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title><%= auto.marca %> <%= auto.modelo %> - <%= nombre %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <main>
+        <article class="detalle-auto">
+            <h2><%= auto.marca %> <%= auto.modelo %></h2>
+            <p>Categoría: <%= auto.categoria %></p>
+
+            <section class="proveedor">
+                <h3>Proveedor</h3>
+                <p>Nombre: <%= auto.proveedor.nombre %></p>
+                <p>Contacto: <%= auto.proveedor.contacto %></p>
+            </section>
+
+            <p>Existencias: <%= auto.existencias %></p>
+
+            <!-- Requisito 5: condicional resuelto en la plantilla -->
+            <% if (auto.existencias === 0) { %>
+                <p class="estado agotado">Agotado</p>
+            <% } else if (auto.existencias <= 2) { %>
+                <p class="estado pocas">Pocas unidades</p>
+            <% } else { %>
+                <p class="estado disponible">Disponible</p>
+            <% } %>
+
+            <div style="margin: 20px 0; display: flex; gap: 10px;">
+                <a href="/autos/editar/<%= auto.id %>" style="padding: 10px 15px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 5px;">Editar</a>
+                <form action="/autos/eliminar/<%= auto.id %>" method="POST" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este auto?');">
+                    <button type="submit" style="padding: 10px 15px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+                </form>
+            </div>
+
+            <a href="/autos">Volver al catálogo</a>
+        </article>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
